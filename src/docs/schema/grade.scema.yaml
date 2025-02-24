@@ -1,0 +1,21 @@
+components: 
+    schemas:
+        addgrade:
+            type: object
+            required: 
+                - assignment_id
+                - feedback
+                - grade
+            properties: 
+                assignment_id:
+                    type: number
+                    example: 1
+                feedback:
+                    type: string
+                    example: good
+                grade:
+                    type: number
+                    example: 90
+
+
+     

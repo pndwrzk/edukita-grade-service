@@ -1,0 +1,44 @@
+components: 
+    schemas:
+        register:
+            type: object
+            required: 
+                - name
+                - email
+                - role
+                - password
+            properties: 
+                name: 
+                    type: string
+                    example: Full Name                    
+                email:
+                    type: string
+                    example: email@example.com
+                role:
+                    type: string
+                    example: student
+                password:
+                    type: string
+                    example: password
+
+        login:
+            type: object
+            required:
+                - email
+                - password
+            properties:
+                email:
+                    type: string
+                    example: email@example.com
+                password:
+                    type: string
+                    example: password
+
+        refreshtoken:
+            type: object
+            required:
+                - refresh_token
+            properties:
+                refresh_token:
+                    type: string
+                    example: abc123

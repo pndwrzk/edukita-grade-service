@@ -1,0 +1,37 @@
+# [POST] grade
+/grades:
+    post:
+        tags:
+            - Grade
+        summary: grade
+        requestBody:
+            description: grade
+            required: true
+            content: 
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/addgrade'
+        responses: 
+            201:
+                description: 'success'
+            400: 
+                description: 'Bad Request'
+            500:
+                description: 'Internal server error'
+
+
+# [GET] grade
+    get:
+        tags:
+            - Grade
+        summary: get grade
+        requestBody:
+            description: get grade
+            required: true
+        responses: 
+            201:
+                description: 'success'
+            400: 
+                description: 'Bad Request'
+            500:
+                description: 'Internal server error'

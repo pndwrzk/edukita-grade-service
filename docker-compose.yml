@@ -1,0 +1,25 @@
+services:
+  app:
+    container_name: edukita-grade-service
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    
+  database:
+    image: postgres:latest
+    container_name: edukita-db
+    environment:
+      POSTGRES_DB: edukita_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

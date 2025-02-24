@@ -1,0 +1,40 @@
+# [POST] assignment
+/assignment:
+    post:
+        tags:
+            - Assignment
+        summary: Assignment
+        requestBody:
+            description: Assignment
+            required: true
+            content: 
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/addassigment'
+        responses: 
+            201:
+                description: 'success'
+            400: 
+                description: 'Bad Request'
+            500:
+                description: 'Internal server error'
+
+    get:
+        tags:
+            - Assignment
+        summary: Get Assignment
+        parameters:
+            - name: subject
+              in: query
+              description: Filter assignments by subject
+              required: false
+              schema:
+                  type: string
+        responses: 
+            200:
+                description: 'Success'
+            400: 
+                description: 'Bad Request'
+            500:
+                description: 'Internal Server Error'
+

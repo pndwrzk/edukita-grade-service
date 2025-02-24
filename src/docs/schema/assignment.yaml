@@ -1,0 +1,22 @@
+components: 
+    schemas:
+        addassigment:
+            type: object
+            required: 
+                - subject
+                - title
+                - content
+            properties: 
+                subject: 
+                    type: string
+                    example: math                    
+                title:
+                    type: string
+                    example: plus minus
+                content:
+                    type: string
+                    example: 1 + 1
+
+                    
+                    
+
