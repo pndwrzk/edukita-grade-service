@@ -1,5 +1,5 @@
 # [POST] assignment
-/assignment:
+/assignments:
     post:
         tags:
             - Assignment
