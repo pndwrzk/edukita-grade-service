@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import {  registerService ,loginService, refreshTokenService} from './auth.service';
 import { CreateUser,LoginUser ,RefreshToken} from '@/interfaces/user.interfaces';
+import httpStatus from 'http-status';
 export const registerController = async (
     req: Request,
     res: Response,
@@ -9,7 +10,7 @@ export const registerController = async (
     try {
         const bodyRequest : CreateUser = req.body;
         const response = await registerService(bodyRequest);
-        res.status(201).json({
+        res.status(httpStatus.CREATED).json({
             message: 'Successfully register',
             data: response.user,
         });
@@ -26,7 +27,7 @@ export const loginController = async (
     try {
         const bodyRequest: LoginUser = req.body;
         const response = await loginService(bodyRequest);
-        res.status(200).json({
+        res.status(httpStatus.OK).json({
             message: 'Successfully login',
             data: response,
         });
@@ -41,7 +42,7 @@ export const refreshTokenAccess = async(  req: Request,
         try {
         const bodyRequest :RefreshToken = req.body;
         const response = await refreshTokenService(bodyRequest);
-        res.status(200).json({
+        res.status(httpStatus.OK).json({
             message: 'Successfully refresh token',
             data: response,
         });

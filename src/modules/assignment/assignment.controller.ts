@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { CreateAssignment } from "@/interfaces/assignment.interfaces";
+import httpStatus from 'http-status';
 
 import {
   createAssignmentService,
@@ -14,7 +15,7 @@ export const createAssignmentController = async (
     const bodyRequest: CreateAssignment = req.body;
     const idUserLogin = req.context?.user_id;
     const response = await createAssignmentService(bodyRequest,idUserLogin);
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       message: "Successfully create assignment",
       data: response,
     });
@@ -32,7 +33,7 @@ export const getListAssignmentController = async (
   
     const { subject } = req.query;
     const response = await getListAssignmentService(subject as string);
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: "Successfully retrieve assignment",
       data: response,
     });

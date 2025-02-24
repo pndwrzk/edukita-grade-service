@@ -22,6 +22,7 @@ import {
   ACCESS_TOKEN_EXPIRY,
   REFRESH_TOKEN_EXPIRY,
 } from "@/config";
+import httpStatus from 'http-status';
 
 export const registerService = async (
   userData: CreateUser
@@ -29,12 +30,12 @@ export const registerService = async (
   const { error } = validateSignUp(userData);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("request body is invalid", 400, dataError);
+    throw new CustomError("request body is invalid", httpStatus.BAD_REQUEST, dataError);
   }
 
   const findUser = await repo.findUserByEmail(userData.email);
   if (findUser) {
-    throw new CustomError(`Email ${userData.email} already exists`, 409);
+    throw new CustomError(`Email ${userData.email} already exists`, httpStatus.CONFLICT);
   }
 
   const hashedPassword = await hash(userData.password, 10);
@@ -54,17 +55,17 @@ export const loginService = async (
   const { error } = validateSignIn(loginData);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("request body is invalid", 400, dataError);
+    throw new CustomError("request body is invalid", httpStatus.BAD_REQUEST, dataError);
   }
 
   const findUser = await repo.findUserByEmail(loginData.email);
   if (!findUser) {
-    throw new CustomError("Email or password is invalid", 401);
+    throw new CustomError("Email or password is invalid",httpStatus.UNAUTHORIZED);
   }
 
   const validPassword = compareSync(loginData.password, findUser.password);
   if (!validPassword) {
-    throw new CustomError("Email or password is invalid", 401);
+    throw new CustomError("Email or password is invalid", httpStatus.UNAUTHORIZED);
   }
 
   const payload: DecodedToken = {
@@ -99,12 +100,12 @@ export const refreshTokenService = async (
   const { error } = validateRefreshToken(body);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("Request body is invalid", 400, dataError);
+    throw new CustomError("Request body is invalid",  httpStatus.BAD_REQUEST, dataError);
   }
 
   const token = body.refresh_token;
   if (!token) {
-    throw new CustomError("Refresh token is required", 400);
+    throw new CustomError("Refresh token is required",  httpStatus.BAD_REQUEST);
   }
 
   const decoded = jwt.verify(
@@ -112,7 +113,7 @@ export const refreshTokenService = async (
     JWT_REFRESH_TOKEN_SECRET as string
   ) as DecodedToken | null;
   if (!decoded?.user_id) {
-    throw new CustomError("Invalid or expired refresh token", 401);
+    throw new CustomError("Invalid or expired refresh token",  httpStatus.UNAUTHORIZED);
   }
   const payload: DecodedToken = {
     user_id: decoded.user_id,
