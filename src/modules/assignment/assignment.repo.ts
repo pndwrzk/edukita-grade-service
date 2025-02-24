@@ -20,7 +20,7 @@ const repo = {
                     attributes: [ 'grade', 'feedback'],
                 },
                 {
-                    model: DB.Users,
+                    model: DB.User,
                     as: 'student',
                     required: false,
                     attributes: [ 'name', 'email'],

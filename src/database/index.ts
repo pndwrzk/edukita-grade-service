@@ -40,7 +40,7 @@ const sequelize = new Sequelize.Sequelize(
 sequelize.authenticate();
 
 export const DB = {
-    Users: userModel(sequelize),
+    User: userModel(sequelize),
     Assignment: assignmentModel(sequelize),
     Grade: gradeModel(sequelize),
     sequelize, 

@@ -20,7 +20,7 @@ const repo = {
                     attributes: [ 'grade', 'feedback'],
                     include: [
                         {
-                            model: DB.Users,
+                            model: DB.User,
                             as: 'teacher', 
                             attributes: ['name', 'email'],
                         },

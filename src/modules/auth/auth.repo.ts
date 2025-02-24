@@ -3,7 +3,7 @@ import { User , CreateUser} from '@/interfaces/user.interfaces';
 
 const repo = {
     findUserByEmail: async (email: string): Promise<User | null> => {
-        const createdUser =  await DB.Users.findOne({ where: { email } });
+        const createdUser =  await DB.User.findOne({ where: { email } });
         if (createdUser) {
             return createdUser.toJSON();
         }    
@@ -11,7 +11,7 @@ const repo = {
     },
 
     createUser: async (userData: CreateUser): Promise<User> => {
-        const createdUser = await DB.Users.create(userData);
+        const createdUser = await DB.User.create(userData);
         return createdUser.toJSON() ;
     },
 };
