@@ -35,5 +35,5 @@ After the service is running, you need to perform a database migration to create
 
 1.  **Run the Migration:** Inside the container shell, run the following command to execute the migration:
     ```bash
-    docker exec -it edukita-grade-service sh
+    npm run migration
     ```
