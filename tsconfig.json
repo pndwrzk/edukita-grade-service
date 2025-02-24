@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "target": "es6",
-      "module": "CommonJS", // Ubah dari ES2022 ke CommonJS
+      "module": "CommonJS", 
       "outDir": "./dist",
       "rootDir": "./src",
       "baseUrl": "./src",
