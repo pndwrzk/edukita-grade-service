@@ -86,6 +86,7 @@ export const loginService = async (
   );
 
   return {
+    role_access :findUser.role,
     token_access: access.token,
     token_access_expired: access.expires_in,
     token_refresh: refresh.token,
@@ -133,6 +134,7 @@ export const refreshTokenService = async (
   );
 
   return {
+    role_access :decoded.user_role,
     token_access: access.token,
     token_access_expired: access.expires_in,
     token_refresh: refresh.token,

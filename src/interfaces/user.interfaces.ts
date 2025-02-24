@@ -19,6 +19,7 @@ export interface UserResponse {
 
 
 export interface LoginResponse {
+    role_access : string,
     token_access : string,
     token_access_expired :number,
     token_refresh : string,
