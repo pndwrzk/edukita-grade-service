@@ -19,7 +19,7 @@ Before running the service, ensure you have Docker and Docker Compose installed 
 To run the service, use the following command:
 
 ```bash
-docker-compose up -d --build
+docker-compose up --build
 ```
 
 
