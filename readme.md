@@ -35,7 +35,10 @@ After the service is running, you need to perform a database migration to create
     docker exec -it edukita-grade-service sh
     ```
 
-1.  **Run the Migration:** Inside the container shell, run the following command to execute the migration:
+2.  **Run the Migration:** Inside the container shell, run the following command to execute the migration:
     ```bash
     npm run migration
     ```
+
+###  telegram notification
+1.  **Telegram Group Testing:** To test the assignment notifications, you can join the Telegram testing group via the following link: https://t.me/+GvC3q60T6hJjYmI1
