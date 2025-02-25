@@ -10,7 +10,7 @@ export class AssignmentModel
   implements Assignment
 {
   public id!: number;
-  public subject!: string;
+  public subject!: 'math' | 'english';
   public title!: string;
   public content!: string;
   public user_id!: number;
@@ -39,7 +39,7 @@ export default function (sequelize: Sequelize): typeof AssignmentModel {
       },
       subject: {
         allowNull: false,
-        type: DataTypes.STRING(45), 
+        type: DataTypes.ENUM('math', 'english'),
       },
       title: {
         allowNull: false,

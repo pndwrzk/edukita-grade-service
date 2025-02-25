@@ -39,7 +39,7 @@ appServer.all('*', (_req, res) => {
 DB.sequelize
     .authenticate()
     .then(() => {
-        console.info('Database connected successfully!');
+      
         appServer.listen(port, () => {
             console.info(`Server is running on http://localhost:${port}`);
         });

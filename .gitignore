@@ -28,6 +28,7 @@ lerna-debug.log*
 
 # Build output
 dist/
+database/
 out/
 coverage/
 *.js

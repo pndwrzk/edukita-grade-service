@@ -16,6 +16,12 @@ export const createGradeService =  async (body: CreateGrade,idUserLogin: number 
            const dataError = DataValidator(error);
            throw new CustomError('request body is invalid', httpStatus.BAD_REQUEST,dataError);
          }
+
+    const isExists = await repo.getGradeByAssignmentId(body.assignment_id)
+    if (isExists) {
+        throw new CustomError('Assignment has already been graded.', httpStatus.CONFLICT);
+    }
+    
     const response = await repo.createGrade(body);
     return response;
 }

@@ -1,8 +1,11 @@
 const path = require('path');
+const dotenv = require("dotenv");
+dotenv.config({ path: ".env" });
+const { DB_DIALECT } = process.env;
+const fileExecute =  DB_DIALECT.toLocaleUpperCase() === 'POSTGRES' ? 'sequelize-postgres-cli.js' : 'sequelize-sqlite-cli.js';
 
 module.exports = {
-  config: path.resolve('src/config', 'sequelize-cli.js'),
+  config: path.resolve('src/config/migrations', fileExecute),
   'models-path': path.resolve('src/database', 'models'),
-  'seeders-path': path.resolve('src/database', 'seeders'),
   'migrations-path': path.resolve('src/database',  'migrations'),
 };

@@ -10,6 +10,14 @@ const repo = {
         return null;
     },
 
+    findUserById: async (id: number): Promise<User | null> => {
+        const createdUser =  await DB.User.findOne({ where: { id } });
+        if (createdUser) {
+            return createdUser.toJSON();
+        }    
+        return null;
+    },
+
     createUser: async (userData: CreateUser): Promise<User> => {
         const createdUser = await DB.User.create(userData);
         return createdUser.toJSON() ;

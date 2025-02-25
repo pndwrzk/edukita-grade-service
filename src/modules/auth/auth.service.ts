@@ -19,10 +19,8 @@ import jwt from "jsonwebtoken";
 import {
   JWT_ACCESS_TOKEN_SECRET,
   JWT_REFRESH_TOKEN_SECRET,
-  ACCESS_TOKEN_EXPIRY,
-  REFRESH_TOKEN_EXPIRY,
 } from "@/config";
-import httpStatus from 'http-status';
+import httpStatus from "http-status";
 
 export const registerService = async (
   userData: CreateUser
@@ -30,12 +28,19 @@ export const registerService = async (
   const { error } = validateSignUp(userData);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("request body is invalid", httpStatus.BAD_REQUEST, dataError);
+    throw new CustomError(
+      "request body is invalid",
+      httpStatus.BAD_REQUEST,
+      dataError
+    );
   }
 
   const findUser = await repo.findUserByEmail(userData.email);
   if (findUser) {
-    throw new CustomError(`Email ${userData.email} already exists`, httpStatus.CONFLICT);
+    throw new CustomError(
+      `Email ${userData.email} already exists`,
+      httpStatus.CONFLICT
+    );
   }
 
   const hashedPassword = await hash(userData.password, 10);
@@ -45,7 +50,7 @@ export const registerService = async (
   });
 
   const { password, ...userWithoutPassword } = newUserData; // eslint-disable-line @typescript-eslint/no-unused-vars
-  console.log(userWithoutPassword);
+
   return { user: userWithoutPassword };
 };
 
@@ -55,17 +60,27 @@ export const loginService = async (
   const { error } = validateSignIn(loginData);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("request body is invalid", httpStatus.BAD_REQUEST, dataError);
+    throw new CustomError(
+      "request body is invalid",
+      httpStatus.BAD_REQUEST,
+      dataError
+    );
   }
 
   const findUser = await repo.findUserByEmail(loginData.email);
   if (!findUser) {
-    throw new CustomError("Email or password is invalid",httpStatus.UNAUTHORIZED);
+    throw new CustomError(
+      "Email or password is invalid",
+      httpStatus.UNAUTHORIZED
+    );
   }
 
   const validPassword = compareSync(loginData.password, findUser.password);
   if (!validPassword) {
-    throw new CustomError("Email or password is invalid", httpStatus.UNAUTHORIZED);
+    throw new CustomError(
+      "Email or password is invalid",
+      httpStatus.UNAUTHORIZED
+    );
   }
 
   const payload: DecodedToken = {
@@ -73,20 +88,16 @@ export const loginService = async (
     user_role: findUser.role,
   };
 
-  const access = generateJWT(
-    payload,
-    JWT_ACCESS_TOKEN_SECRET as string,
-    ACCESS_TOKEN_EXPIRY as unknown as number
-  );
+  const access = generateJWT(payload, JWT_ACCESS_TOKEN_SECRET as string, "1h");
 
   const refresh = generateJWT(
     payload,
     JWT_REFRESH_TOKEN_SECRET as string,
-    REFRESH_TOKEN_EXPIRY as unknown as number
+    "1d"
   );
 
   return {
-    role_access :findUser.role,
+    role_access: findUser.role,
     token_access: access.token,
     token_access_expired: access.expires_in,
     token_refresh: refresh.token,
@@ -101,12 +112,16 @@ export const refreshTokenService = async (
   const { error } = validateRefreshToken(body);
   if (error) {
     const dataError = DataValidator(error);
-    throw new CustomError("Request body is invalid",  httpStatus.BAD_REQUEST, dataError);
+    throw new CustomError(
+      "Request body is invalid",
+      httpStatus.BAD_REQUEST,
+      dataError
+    );
   }
 
   const token = body.refresh_token;
   if (!token) {
-    throw new CustomError("Refresh token is required",  httpStatus.BAD_REQUEST);
+    throw new CustomError("Refresh token is required", httpStatus.BAD_REQUEST);
   }
 
   const decoded = jwt.verify(
@@ -114,27 +129,26 @@ export const refreshTokenService = async (
     JWT_REFRESH_TOKEN_SECRET as string
   ) as DecodedToken | null;
   if (!decoded?.user_id) {
-    throw new CustomError("Invalid or expired refresh token",  httpStatus.UNAUTHORIZED);
+    throw new CustomError(
+      "Invalid or expired refresh token",
+      httpStatus.UNAUTHORIZED
+    );
   }
   const payload: DecodedToken = {
     user_id: decoded.user_id,
     user_role: decoded.user_role,
   };
 
-  const access = generateJWT(
-    payload,
-    JWT_ACCESS_TOKEN_SECRET as string,
-    Number(ACCESS_TOKEN_EXPIRY)
-  );
+  const access = generateJWT(payload, JWT_ACCESS_TOKEN_SECRET as string, "1h");
 
   const refresh = generateJWT(
     payload,
     JWT_REFRESH_TOKEN_SECRET as string,
-    Number(REFRESH_TOKEN_EXPIRY)
+    "1d"
   );
 
   return {
-    role_access :decoded.user_role,
+    role_access: decoded.user_role,
     token_access: access.token,
     token_access_expired: access.expires_in,
     token_refresh: refresh.token,

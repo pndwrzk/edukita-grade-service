@@ -3,10 +3,19 @@ import { CreateGrade,Grade ,GradeResponse} from '@/interfaces/grade.interfaces';
 
 
 
+
 const repo = {
     
     createGrade: async (gradeData: CreateGrade): Promise<Grade> => {
         return await DB.Grade.create(gradeData);
+    },
+
+    getGradeByAssignmentId: async (assignmentId: number): Promise<Grade | null> => {
+        return await DB.Grade.findOne(
+            {
+                where: {assignment_id : assignmentId}
+            }
+        )
     },
     
     getGrade : async(idUserLogin : number):Promise<GradeResponse[]>=>{
@@ -27,7 +36,7 @@ const repo = {
                     ],
                 },
             ],
-            attributes: ['id', 'title', 'content', 'created_at', 'updated_at'],
+            attributes: ['id', 'title', 'content', 'created_at', 'updated_at','subject'],
         });
         
         return assignments as unknown as GradeResponse[];

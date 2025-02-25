@@ -1,6 +1,6 @@
 export interface Assignment {
     id: number;
-    subject: string;
+    subject: 'math' | 'english';
     title: string;
     content: string;
     user_id: number;
@@ -9,7 +9,7 @@ export interface Assignment {
   }
   
   export interface CreateAssignment {
-    subject: string;
+    subject: 'math' | 'english';
     title: string;
     content: string;
     user_id: number ;
@@ -18,7 +18,7 @@ export interface Assignment {
 
   export interface AssignmentResponse {
     id: number;
-    subject: string;
+    subject: 'math' | 'english';
     title: string;
     content: string;
     created_at: string;
